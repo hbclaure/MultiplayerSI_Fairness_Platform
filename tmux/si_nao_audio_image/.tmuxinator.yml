@@ -1,0 +1,34 @@
+name: si_nao_audio_image
+root: ~/catkin_ws
+
+windows:
+        - nao_and_game_and_audio_and_image:
+                layout: tiled
+                panes:
+                        - core:
+                                - roscore
+                        - python-server:
+                                - naosi
+                                - cd local_webpage
+                                - python3 -m http.server 8668
+                        - localwebpage:
+                                - naosi
+                                - rosrun error_recovery_si_nao localwebpage.py
+                        - nao_action:
+                                - naosi
+                                - rosrun error_recovery_si_nao nao_action.py
+                        - determine_action:
+                                - naosi
+                                - rosrun error_recovery_si_nao detemine_action.py
+                        - websocket:
+                                - naosi
+                                - rosrun error_recovery_si_nao websocket.py
+                        - audio:
+                                - sleep 1
+                                - roslaunch audio_capture capture.launch device:=plughw:3,0
+                        - image: 
+                                - sleep 1
+                                - naosi
+                                - deactivate
+                                - cd ..
+                                - roslaunch Azure_Kinect_ROS_Driver/launch/driver_with_bodytracking.launch

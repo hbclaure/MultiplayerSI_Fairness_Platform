@@ -1,0 +1,26 @@
+name: si_nao
+root: ~/catkin_ws
+
+windows:
+        - nao_and_game:
+                layout: tiled
+                panes:
+                        - core:
+                                - roscore
+                        - python-server:
+                                - naosi
+                                - cd local_webpage
+                                - python3 -m http.server 8668
+                        - localwebpage:
+                                - naosi
+                                - rosrun error_recovery_si_nao localwebpage.py
+                        - nao_action:
+                                - naosi
+                                - rosrun error_recovery_si_nao nao_action.py
+                        - determine_action:
+                                - naosi
+                                - rosrun error_recovery_si_nao detemine_action.py
+                        - websocket:
+                                - naosi
+                                - rosrun error_recovery_si_nao websocket.py
+

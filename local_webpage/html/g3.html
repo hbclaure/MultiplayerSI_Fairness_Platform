@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Space Invaders Study!</title>
+  </head>
+  <style>
+    #fullscreenPrompt {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:white;
+      color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+  <div id="fullscreenPrompt">Press 'X' to enter full screen mode</div>
+  <h1> Round 1</h1>
+
+    <iframe id="myIframe" allow="camera" width=1300 height=800></iframe>
+    <p> </p>
+    <!-- <div id="Next" style="display:none">
+        <a href="questions1.html"> Next </a> 
+    </div> -->
+    <a id="nextPageLink" href="questions1.html">  </a>  
+
+</body>
+
+<script>
+    function showNext() { 
+        document.getElementById("Next").style.display = "inline"; 
+    }
+    setTimeout("showNext()", 30000);
+
+    function findGetParameter(parameterName) {
+        var result = null,
+            tmp = [];
+        var items = location.search.substr(1).split("&");
+        for (var index = 0; index < items.length; index++) {
+            tmp = items[index].split("=");
+            if (tmp[0] === parameterName) result = tmp[1];
+        }
+        return result;
+    }
+    let game_port = 8667;
+    let mode = 2;
+    let game_num = 3;
+    let condition = findGetParameter('condition') ? findGetParameter('condition') : 'C';
+    let game_url = "http://localhost:"+game_port+"/";
+    let player_id = findGetParameter('id') ? findGetParameter('id') : 'UNDEFINED';
+    let full_url = game_url+"?id="+player_id+"&mode="+mode+"&game="+game_num+"&condition="+condition
+    
+    let myIframe = document.getElementById("myIframe")
+    myIframe.src = full_url
+</script>
+    <script src="../../src/game_files/static/js/gamepad.js"></script>
+    <script src="shutter_wake.js"></script>
+    <script src="shutter_ingame.js"></script>
+    <script>
+     var all_params = window.location.href.split('?')[1];
+     var a = document.getElementsByTagName('a');
+     for (var i=0; i < a.length; i++){
+       a[i].href+="?";
+       a[i].href+=all_params;
+       console.log(a[i].href);
+     }
+    
+    var gamepad = false; // This variable will be used to track whether a gamepad is connected
+  
+    var bButtonPressed = false;
+    var xButtonPressed = false;
+    var bButtonActive = false;  // Add a flag to track whether checking for 'B' button press is active
+
+    window.addEventListener("gamepadconnected", function(e) {
+      gamepad = true;
+    });
+
+    window.addEventListener("gamepaddisconnected", function(e) {
+      gamepad = false;
+    });
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+      shutterIngame();
+    });
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        myIframe.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    function checkButtonB() {
+      if (gamepad && bButtonActive) { // Check if bButtonActive is true
+        var gp = navigator.getGamepads()[0];
+        if (gp) {
+          if (gp.buttons[1].pressed) {
+            if (!bButtonPressed) {
+              var nextPageLink = document.getElementById("nextPageLink");
+              if (nextPageLink) {
+                nextPageLink.click();
+              }
+              bButtonPressed = true;
+            }
+          } else {
+            bButtonPressed = false;
+          }
+        }
+      }
+    }
+
+    function checkButtonX() {
+      if (gamepad) {
+        var gp = navigator.getGamepads()[0];
+        if (gp && gp.buttons[2].pressed && !xButtonPressed) {
+          toggleFullscreen();
+          var fullscreenPrompt = document.getElementById("fullscreenPrompt");
+          if (fullscreenPrompt) {
+            fullscreenPrompt.parentNode.removeChild(fullscreenPrompt);
+          }
+          xButtonPressed = true;
+        } else if (!gp.buttons[2].pressed) {
+          xButtonPressed = false;
+        }
+      }
+    }
+
+    setInterval(checkButtonB, 100);
+    setInterval(checkButtonX, 100);
+
+    // Activate 'B' button check after 5 seconds
+    setTimeout(function() {
+      bButtonActive = true;
+    }, 5000);
+  </script>
+</html>

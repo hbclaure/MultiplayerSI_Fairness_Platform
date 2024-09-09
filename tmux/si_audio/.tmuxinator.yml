@@ -1,0 +1,9 @@
+name: si_audio
+root: ~/catkin_ws
+
+windows:
+        - si_audio:
+                layout: tiled
+                panes:
+                        - audio:
+                                - roslaunch audio_capture capture.launch device:=plughw:3,0

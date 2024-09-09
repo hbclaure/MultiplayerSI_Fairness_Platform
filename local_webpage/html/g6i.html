@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 20px;
+      }
+  
+      h1 {
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+  
+      p {
+        font-size: 18px;
+        line-height: 1.6;
+        margin-bottom: 10px;
+      }
+  
+      a {
+        font-size: 20px;
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.3s;
+      }
+  
+      a:hover {
+        background-color: #0056b3;
+      }
+  
+      /* Media query for large screens (e.g., TV) */
+      @media screen and (min-width: 1200px) {
+        body {
+          margin: 50px;
+        }
+  
+        h1 {
+          font-size: 60px;
+        }
+  
+        p {
+          font-size: 50px;
+        }
+  
+        a {
+          font-size: 40px;
+          padding: 15px 30px;
+        }
+      }
+    </style>
+    <title>Space Invaders Study!</title>
+    <script src="robot_wake.js"></script>
+    <script src="robot_introduction.js"></script>
+  </head>
+  <body>
+    <h1>Surveys</h1>
+    <p>Thank you for playing the 3 rounds of Space Invaders. Please call the researcher to complete a set of survey questions about the experience.</p>
+    <p> </p>
+
+ 
+  </body>
+
+  <script>
+    var all_params = window.location.href.split('?')[1];
+    var a = document.getElementsByTagName('a');
+    for (var i=0; i < a.length; i++){
+        a[i].href+="?";
+        a[i].href+=all_params;
+        console.log(a[i].href);
+    }
+    </script>
+</html>

@@ -1,0 +1,3 @@
+Log file created
+error saving images: UNDEFINED at 2024-06-02 00:21:52.860777
+, invalid literal for int() with base 10: 'player_id":"UNDEFINED","mode":3,"game_num":0,"display_vid":"off","game_condition":"A"'

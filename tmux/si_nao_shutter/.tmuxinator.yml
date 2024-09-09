@@ -1,0 +1,34 @@
+name: si_nao
+root: ~/catkin_ws
+
+windows:
+        - nao_and_game:
+                layout: tiled
+                panes:
+                        - core:
+                                - roscore
+                        - python-server:
+                                - naosi
+                                - cd local_webpage
+                                - python3 -m http.server 8668
+                        - localwebpage:
+                                - naosi
+                                - rosrun error_recovery_si_nao localwebpage.py
+                        - nao_action:
+                                - naosi
+                                - rosrun error_recovery_si_nao nao_action.py
+                        - determine_action:
+                                - naosi
+                                - rosrun error_recovery_si_nao determine_action.py
+                        - websocket:
+                                - naosi
+                                - rosrun error_recovery_si_nao websocket.py
+                        - shutter_bt:
+                                - cd ~/tarzan_ws
+                                - gosh
+                                - roslaunch shutter_spaceinvaders shutter_si_robot.launch
+                        - shutter_node:
+                                - cd ~/tarzan_ws
+                                - gosh
+                                - rosrun shutter_spaceinvaders shutter_action_si.py
+

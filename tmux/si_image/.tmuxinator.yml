@@ -1,0 +1,13 @@
+name: si_image
+root: ~/catkin_ws
+
+windows:
+        - si_image:
+                layout: tiled
+                panes:
+                        - kinect:
+                                - naosi
+                                - deactivate
+                                - cd ..
+                                - roslaunch Azure_Kinect_ROS_Driver/launch/driver_with_bodytracking.launch
+
